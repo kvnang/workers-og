@@ -12,23 +12,19 @@
       "require": "./dist/index.js"
     }
   },
-  "version": "0.0.1",
+  "version": "0.0.4",
   "devDependencies": {
     "@cloudflare/workers-types": "^3.16.0",
     "@types/node": "^18.8.4",
     "esbuild": "^0.15.10",
     "typescript": "^4.8.4",
     "vite": "^3.1.7",
-    "vite-plugin-dts": "^1.6.5",
-    "vite-plugin-static-copy": "^0.9.0",
-    "vite-plugin-top-level-await": "^1.1.1",
-    "vite-plugin-wasm": "^3.0.0",
-    "wrangler": "2.1.11"
+    "wrangler": "2.1.11",
+    "yoga-wasm-web": "^0.1.2"
   },
   "private": false,
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
+    "build": "node bin/esbuild.js && tsc",
     "start": "wrangler dev",
     "deploy": "wrangler publish"
   },
@@ -37,7 +33,6 @@
     "domhandler": "^5.0.3",
     "htmlparser2": "^8.0.1",
     "just-camel-case": "^6.1.1",
-    "satori": "^0.0.38",
-    "yoga-wasm-web": "^0.1.2"
+    "satori": "^0.0.38"
   }
 }

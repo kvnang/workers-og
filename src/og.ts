@@ -8,9 +8,9 @@ import { loadGoogleFont } from "./font";
 import type { ImageResponseOptions, ReactElementLike } from "./types";
 
 // @ts-expect-error .wasm files are not typed
-import * as yogaWasm from "../vendors/yoga.wasm?url";
+import yogaWasm from "../vendors/yoga.wasm";
 // @ts-expect-error .wasm files are not typed
-import * as resvgWasm from "../vendors/index_bg.wasm?url";
+import resvgWasm from "../vendors/index_bg.wasm";
 
 export const og = async ({
   element,
@@ -28,9 +28,8 @@ export const og = async ({
 
   // Init yoga wasm
   try {
-    await initYoga(yogaWasm as WebAssembly.Module).then(async (yoga: any) => {
-      await init(yoga);
-    });
+    const yoga = await initYoga(yogaWasm);
+    await init(yoga);
   } catch (err) {
     console.error(err);
   }
@@ -78,6 +77,7 @@ export class ImageResponse extends Response {
     options: ImageResponseOptions = {}
   ) {
     super();
+
     const body = new ReadableStream({
       async start(controller) {
         const pngBuffer = await og({
