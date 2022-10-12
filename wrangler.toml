@@ -1,0 +1,4 @@
+name = "workers-og"
+main = "worker/index.ts"
+compatibility_date = "2022-10-11"
+compatibility_flags = ["streams_enable_constructors"]
