@@ -1,2 +1,1 @@
-import { ImageResponse } from "./og";
-export { ImageResponse };
+export { ImageResponse } from "./og";
