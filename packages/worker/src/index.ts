@@ -9,6 +9,7 @@
  */
 
 import { ImageResponse } from "../../workers-og/src";
+import { corsHeaders } from "./cors";
 export interface Env {
   // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
   // MY_KV_NAMESPACE: KVNamespace;
@@ -29,6 +30,7 @@ export default {
     const params = new URL(request.url).searchParams;
     const title = params.get("title") || "Lorem ipsum dolor sit amet";
     const format = params.get("format");
+    const debug = params.get("debug");
 
     const html = `
  <div style="display: flex; flex-direction: column; height: 100vh; width: 100vw; font-family: sans-serif; background-image: linear-gradient(135deg, #281c4a, #160f29)">
@@ -51,7 +53,10 @@ export default {
 
     return new ImageResponse(html, {
       format: format as "svg" | "png",
-      debug: true,
+      debug: debug === "true",
+      headers: {
+        ...corsHeaders,
+      },
     });
   },
 };

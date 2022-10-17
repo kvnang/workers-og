@@ -1,5 +1,3 @@
-import type { ChildNode } from "domhandler";
-
 export type ReactElementLikeProps =
   | {
       children?: (ReactElementLike | undefined)[];
@@ -22,7 +20,6 @@ export type ReactElementLike =
       props: ReactElementLikeProps;
     };
 
-export type TransformNode = (node: ChildNode) => ReactElementLike | undefined;
 export type TransformElement = (
   element: Element | ChildNode
 ) => ReactElementLike | undefined;

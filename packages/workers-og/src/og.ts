@@ -40,7 +40,7 @@ export const og = async ({
   // render the React element-like object into an SVG
   const svg = await satori(reactElement, {
     width: options.width || 1200,
-    height: options.height || 600,
+    height: options.height || 630,
     fonts: !!options.fonts?.length
       ? options.fonts
       : [
@@ -90,7 +90,11 @@ export class ImageResponse extends Response {
         return new Response(svg, {
           headers: {
             "Content-Type": "image/svg+xml",
+            "Cache-Control": "no-cache, no-store",
+            ...options.headers,
           },
+          status: options.status || 200,
+          statusText: options.statusText,
         });
       })() as unknown as ImageResponse;
     } else {
