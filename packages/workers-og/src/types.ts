@@ -23,6 +23,9 @@ export type ReactElementLike =
     };
 
 export type TransformNode = (node: ChildNode) => ReactElementLike | undefined;
+export type TransformElement = (
+  element: Element | ChildNode
+) => ReactElementLike | undefined;
 
 export interface ImageResponseOptions {
   width?: number;
@@ -40,4 +43,7 @@ export interface ImageResponseOptions {
   status?: number;
   statusText?: string;
   headers?: Record<string, string>;
+
+  // Format
+  format?: "svg" | "png"; // Defaults to 'png'
 }

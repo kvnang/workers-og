@@ -13,28 +13,22 @@
     }
   },
   "types": "./dist/index.d.ts",
-  "version": "0.0.6",
+  "version": "0.0.10",
   "devDependencies": {
     "@cloudflare/workers-types": "^3.16.0",
     "@types/node": "^18.8.4",
     "esbuild": "^0.15.10",
     "esbuild-plugin-d.ts": "^1.1.0",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.7",
-    "wrangler": "2.1.11",
-    "yoga-wasm-web": "^0.1.2"
+    "typescript": "^4.8.4"
   },
   "private": false,
   "scripts": {
-    "build": "node bin/esbuild.js",
-    "start": "wrangler dev",
-    "deploy": "wrangler publish"
+    "build": "node bin/esbuild.js"
   },
   "dependencies": {
     "@resvg/resvg-wasm": "^2.1.0",
-    "domhandler": "^5.0.3",
-    "htmlparser2": "^8.0.1",
     "just-camel-case": "^6.1.1",
-    "satori": "^0.0.38"
+    "satori": "^0.0.38",
+    "yoga-wasm-web": "^0.1.2"
   }
 }

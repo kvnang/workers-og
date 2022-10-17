@@ -35,7 +35,7 @@ export const og = async ({
   }
 
   const reactElement =
-    typeof element === "string" ? parseHtml(element) : element;
+    typeof element === "string" ? await parseHtml(element) : element;
 
   // render the React element-like object into an SVG
   const svg = await satori(reactElement, {
@@ -52,6 +52,12 @@ export const og = async ({
           },
         ],
   });
+
+  const requestedFormat = options.format || "png";
+
+  if (requestedFormat === "svg") {
+    return svg;
+  }
 
   // convert the SVG into a PNG
   const opts = {
@@ -78,28 +84,39 @@ export class ImageResponse extends Response {
   ) {
     super();
 
-    const body = new ReadableStream({
-      async start(controller) {
-        const pngBuffer = await og({
-          element,
-          options,
+    if (options.format === "svg") {
+      return (async () => {
+        const svg = await og({ element, options });
+        return new Response(svg, {
+          headers: {
+            "Content-Type": "image/svg+xml",
+          },
         });
+      })() as unknown as ImageResponse;
+    } else {
+      const body = new ReadableStream({
+        async start(controller) {
+          const buffer = await og({
+            element,
+            options,
+          });
 
-        controller.enqueue(pngBuffer);
-        controller.close();
-      },
-    });
+          controller.enqueue(buffer);
+          controller.close();
+        },
+      });
 
-    return new Response(body, {
-      headers: {
-        "Content-Type": "image/png",
-        "Cache-Control": options.debug
-          ? "no-cache, no-store"
-          : "public, immutable, no-transform, max-age=31536000",
-        ...options.headers,
-      },
-      status: options.status || 200,
-      statusText: options.statusText,
-    });
+      return new Response(body, {
+        headers: {
+          "Content-Type": "image/png",
+          "Cache-Control": options.debug
+            ? "no-cache, no-store"
+            : "public, immutable, no-transform, max-age=31536000",
+          ...options.headers,
+        },
+        status: options.status || 200,
+        statusText: options.statusText,
+      });
+    }
   }
 }
