@@ -12,6 +12,23 @@ import yogaWasm from "../vendors/yoga.wasm";
 // @ts-expect-error .wasm files are not typed
 import resvgWasm from "../vendors/index_bg.wasm";
 
+const initResvgWasm = async () => {
+  try {
+    await initWasm(resvgWasm as WebAssembly.Module);
+  } catch (err) {
+    // console.error(err);
+  }
+};
+
+const initYogaWasm = async () => {
+  try {
+    const yoga = await initYoga(yogaWasm);
+    await init(yoga);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const og = async ({
   element,
   options,
@@ -19,20 +36,8 @@ export const og = async ({
   element: string | ReactElementLike;
   options: ImageResponseOptions;
 }) => {
-  // Init resvg wasm
-  try {
-    await initWasm(resvgWasm as WebAssembly.Module);
-  } catch (err) {
-    // console.error(err);
-  }
-
-  // Init yoga wasm
-  try {
-    const yoga = await initYoga(yogaWasm);
-    await init(yoga);
-  } catch (err) {
-    console.error(err);
-  }
+  // Init wasms
+  await Promise.allSettled([initResvgWasm(), initYogaWasm()]);
 
   const reactElement =
     typeof element === "string" ? await parseHtml(element) : element;
@@ -90,7 +95,9 @@ export class ImageResponse extends Response {
         return new Response(svg, {
           headers: {
             "Content-Type": "image/svg+xml",
-            "Cache-Control": "no-cache, no-store",
+            "Cache-Control": options.debug
+              ? "no-cache, no-store"
+              : "public, immutable, no-transform, max-age=31536000",
             ...options.headers,
           },
           status: options.status || 200,

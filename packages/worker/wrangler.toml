@@ -2,3 +2,10 @@ name = "og"
 main = "src/index.ts"
 compatibility_date = "2022-10-11"
 compatibility_flags = ["streams_enable_constructors"]
+workers_dev = true
+
+
+[[r2_buckets]]
+binding = "OG_BUCKET" # <~ valid JavaScript variable name
+bucket_name = 'opengraph'
+preview_bucket_name = 'opengraphpreview'

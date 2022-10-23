@@ -3,7 +3,9 @@
   "version": "0.0.11",
   "devDependencies": {
     "@cloudflare/workers-types": "^3.16.0",
-    "wrangler": "^2.1.11"
+    "@types/react": "^18.0.21",
+    "wrangler": "^2.1.11",
+    "react": "^18.2.0"
   },
   "private": false,
   "scripts": {
