@@ -22,6 +22,8 @@ export interface Env {
   //
   // Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
   OG_BUCKET: R2Bucket;
+
+  BUCKET_AUTH_KEY_SECRET: string;
 }
 
 export const PATTERNS = {
@@ -56,14 +58,15 @@ export default {
       params.get("backgroundImage") ||
       "linear-gradient(135deg, #281c4a, #160f29)";
 
-    let imageSrc;
-    const sampleImage = await env.OG_BUCKET.get("og-sample-image-1.png");
+    let imageSrc = params.get("imageSrc");
 
-    if (sampleImage) {
-      const sampleImageBuffer = await sampleImage.arrayBuffer();
-      const sampleImageBase64 = base64ArrayBuffer(sampleImageBuffer);
-      imageSrc = `data:image/png;base64,${sampleImageBase64}`;
-    }
+    // const sampleImage = await env.OG_BUCKET.get("og-sample-image-1.png");
+
+    // if (sampleImage) {
+    //   const sampleImageBuffer = await sampleImage.arrayBuffer();
+    //   const sampleImageBase64 = base64ArrayBuffer(sampleImageBuffer);
+    //   imageSrc = `data:image/png;base64,${sampleImageBase64}`;
+    // }
 
     const element = template({
       title,

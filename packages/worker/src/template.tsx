@@ -13,7 +13,7 @@ export const template = ({
   authorSrc: string;
   author: string;
   backgroundImage: string;
-  imageSrc?: string;
+  imageSrc?: string | null;
 }) => (
   <div
     style={{
