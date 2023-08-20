@@ -1,16 +1,14 @@
-// @ts-expect-error satori/wasm is not typed
 import satori, { init } from "satori/wasm";
-// @ts-expect-error yoga-wasm-web is not typed
 import initYoga from "yoga-wasm-web";
 import { Resvg, initWasm } from "@resvg/resvg-wasm";
 import { parseHtml } from "./parseHtml";
 import { loadGoogleFont } from "./font";
-import type { ImageResponseOptions, ReactElementLike } from "./types";
+import type { ImageResponseOptions } from "./types";
 
 // @ts-expect-error .wasm files are not typed
 import yogaWasm from "../vendors/yoga.wasm";
 // @ts-expect-error .wasm files are not typed
-import resvgWasm from "../vendors/index_bg.wasm";
+import resvgWasm from "../vendors/resvg.wasm";
 
 const initResvgWasm = async () => {
   try {
@@ -33,7 +31,7 @@ export const og = async ({
   element,
   options,
 }: {
-  element: string | ReactElementLike;
+  element: string | React.ReactNode;
   options: ImageResponseOptions;
 }) => {
   // Init wasms
@@ -84,7 +82,7 @@ export const og = async ({
 
 export class ImageResponse extends Response {
   constructor(
-    element: string | ReactElementLike,
+    element: string | React.ReactNode,
     options: ImageResponseOptions = {}
   ) {
     super();

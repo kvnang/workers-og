@@ -16,9 +16,7 @@ import {
  *
  * Or use a different, more forgiving parser
  */
-export async function parseHtml(
-  html: string
-): Promise<ReactElementLike | null> {
+export async function parseHtml(html: string): Promise<React.ReactNode | null> {
   let vdomStr = ``;
 
   const rewriter = new HTMLRewriter()

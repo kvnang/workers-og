@@ -1,39 +1,10 @@
-export type ReactElementLikeProps =
-  | {
-      children?: (ReactElementLike | undefined)[];
-      style?:
-        | string
-        | number
-        | boolean
-        | Record<string, string | number>
-        | null
-        | undefined;
-      [key: string]: any;
-    }
-  | null
-  | undefined;
-
-export type ReactElementLike =
-  | string
-  | {
-      type: string;
-      props: ReactElementLikeProps;
-    };
-
-export type TransformElement = (
-  element: Element | ChildNode
-) => ReactElementLike | undefined;
+import type { SatoriOptions } from "satori/wasm";
 
 export interface ImageResponseOptions {
   width?: number;
   height?: number;
   // emoji?: 'twemoji' | 'blobmoji' | 'noto' | 'openmoji' = 'twemoji',
-  fonts?: {
-    name: string;
-    data: ArrayBuffer;
-    weight: number;
-    style: "normal" | "italic";
-  }[];
+  fonts?: SatoriOptions["fonts"];
   debug?: boolean;
 
   // Options that will be passed to the HTTP response

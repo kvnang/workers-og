@@ -13,22 +13,23 @@
     }
   },
   "types": "./dist/index.d.ts",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230801.0",
-    "@types/node": "^20.4.8",
-    "esbuild": "^0.18.19",
+    "@cloudflare/workers-types": "^4.20230814.0",
+    "@types/node": "^20.5.1",
+    "esbuild": "^0.18.20",
     "esbuild-plugin-d.ts": "^1.1.0",
     "typescript": "^5.1.6"
   },
   "private": false,
   "scripts": {
-    "build": "node bin/esbuild.js"
+    "build": "node bin/esbuild.js",
+    "ts": "tsc --noEmit"
   },
   "dependencies": {
     "@resvg/resvg-wasm": "^2.4.1",
     "just-camel-case": "^6.2.0",
-    "satori": "^0.10.2",
+    "satori": "^0.10.3",
     "yoga-wasm-web": "^0.3.3"
   }
 }
