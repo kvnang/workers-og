@@ -19,13 +19,17 @@ export const getAttributes = (element: Element) => {
   if (style) {
     const cleanStyle = style.replace(/\n/g, "").replace(/\s\s+/g, " ");
 
-    let styleStr = cleanStyle.split(";").reduce<string>((acc, cur) => {
-      const [k, v] = cur.split(":");
-      if (k && v) {
-        acc += `"${camelCase(k.trim())}": "${sanitizeJSON(v.trim())}",`;
-      }
-      return acc;
-    }, "");
+    // Split by semicolon, but not semicolon inside ()
+    let styleStr = cleanStyle
+      .split(/;(?![^(]*\))/)
+      .reduce<string>((acc, cur) => {
+        // Split only the first colon
+        const [k, v] = cur.split(/:(.+)/);
+        if (k && v) {
+          acc += `"${camelCase(k.trim())}": "${sanitizeJSON(v.trim())}",`;
+        }
+        return acc;
+      }, "");
 
     if (styleStr.endsWith(",")) {
       styleStr = styleStr.slice(0, -1);

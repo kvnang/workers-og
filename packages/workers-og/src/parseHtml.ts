@@ -1,4 +1,3 @@
-import { ReactElementLike } from "./types";
 import {
   getAttributes,
   maybeRemoveTrailingComma,
