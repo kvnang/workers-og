@@ -2,10 +2,10 @@
   "name": "workers-og-cloudflare-worker",
   "version": "0.0.12",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230814.0",
-    "@types/react": "^18.2.20",
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "@types/react": "^18.2.47",
     "react": "^18.2.0",
-    "wrangler": "^3.5.1"
+    "wrangler": "^3.22.4"
   },
   "private": false,
   "scripts": {

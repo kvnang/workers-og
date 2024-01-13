@@ -14,7 +14,7 @@ const initResvgWasm = async () => {
   try {
     await initWasm(resvgWasm as WebAssembly.Module);
   } catch (err) {
-    // console.error(err);
+    console.error(err);
   }
 };
 
@@ -27,13 +27,28 @@ const initYogaWasm = async () => {
   }
 };
 
-export const og = async ({
-  element,
-  options,
-}: {
+interface Props {
+  /**
+   * The React element or HTML string to render into an image.
+   * @example
+   * ```tsx
+   * <div>
+   *  <h1>Hello World</h1>
+   * </div>
+   * ```
+   * @example
+   * ```html
+   * <div><h1>Hello World</h1></div>
+   * ```
+   */
   element: string | React.ReactNode;
+  /**
+   * The options for the image response.
+   */
   options: ImageResponseOptions;
-}) => {
+}
+
+export const og = async ({ element, options }: Props) => {
   // Init wasms
   await Promise.allSettled([initResvgWasm(), initYogaWasm()]);
 
