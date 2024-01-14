@@ -10,9 +10,10 @@
   "private": false,
   "scripts": {
     "start": "wrangler dev",
+    "build": "wrangler build --env production",
     "deploy": "wrangler publish"
   },
   "dependencies": {
-    "workers-og": "workspace:*"
+    "workers-og": "^0.0.19"
   }
 }

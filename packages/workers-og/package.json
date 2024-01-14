@@ -13,10 +13,11 @@
     }
   },
   "types": "./dist/index.d.ts",
-  "version": "0.0.15",
+  "version": "0.0.19",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",
     "@types/node": "^20.11.0",
+    "@vercel/og": "^0.6.2",
     "esbuild": "^0.19.11",
     "esbuild-plugin-d.ts": "^1.2.2",
     "typescript": "^5.3.3"
@@ -27,7 +28,7 @@
     "ts": "tsc --noEmit"
   },
   "dependencies": {
-    "@resvg/resvg-wasm": "^2.6.0",
+    "@resvg/resvg-wasm": "^2.4.0",
     "just-camel-case": "^6.2.0",
     "satori": "^0.10.11",
     "yoga-wasm-web": "^0.3.3"

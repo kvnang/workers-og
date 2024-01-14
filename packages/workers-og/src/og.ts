@@ -32,34 +32,42 @@ interface Props {
    * The React element or HTML string to render into an image.
    * @example
    * ```tsx
-   * <div>
+   * <div
+   *  style={{
+   *    display: 'flex',
+   *  }}
+   * >
    *  <h1>Hello World</h1>
    * </div>
    * ```
    * @example
    * ```html
-   * <div><h1>Hello World</h1></div>
+   * <div style="display:flex;"><h1>Hello World</h1></div>
    * ```
    */
   element: string | React.ReactNode;
   /**
    * The options for the image response.
    */
-  options: ImageResponseOptions;
+  options?: ImageResponseOptions | undefined;
 }
 
 export const og = async ({ element, options }: Props) => {
-  // Init wasms
+  // 1. Init WASMs
   await Promise.allSettled([initResvgWasm(), initYogaWasm()]);
 
+  // 2. Get React Element
   const reactElement =
     typeof element === "string" ? await parseHtml(element) : element;
 
-  // render the React element-like object into an SVG
+  // 3. Convert React Element to SVG with Satori
+  const width = options?.width || 1200;
+  const height = options?.height || 630;
+
   const svg = await satori(reactElement, {
-    width: options.width || 1200,
-    height: options.height || 630,
-    fonts: !!options.fonts?.length
+    width,
+    height,
+    fonts: !!options?.fonts?.length
       ? options.fonts
       : [
           {
@@ -71,24 +79,20 @@ export const og = async ({ element, options }: Props) => {
         ],
   });
 
-  const requestedFormat = options.format || "png";
+  const format = options?.format || "png";
 
-  if (requestedFormat === "svg") {
+  if (format === "svg") {
     return svg;
   }
 
-  // convert the SVG into a PNG
-  const opts = {
-    // background: "rgba(238, 235, 230, .9)",
+  // 4. Convert the SVG into a PNG
+  const resvg = new Resvg(svg, {
     fitTo: {
       mode: "width" as const,
-      value: options.width || 1200,
+      value: width,
     },
-    font: {
-      loadSystemFonts: false, // It will be faster to disable loading system fonts.
-    },
-  };
-  const resvg = new Resvg(svg, opts);
+  });
+
   const pngData = resvg.render();
   const pngBuffer = pngData.asPng();
 

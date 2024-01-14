@@ -8,21 +8,13 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { ImageResponse } from "../../workers-og/src";
+import { ImageResponse } from "../../workers-og/src/og";
 import { handleBucketRequest } from "./bucket";
 import { corsHeaders } from "./cors";
 import { template } from "./template";
-import { base64ArrayBuffer } from "./utils";
-export interface Env {
-  // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-  // MY_KV_NAMESPACE: KVNamespace;
-  //
-  // Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-  // MY_DURABLE_OBJECT: DurableObjectNamespace;
-  //
-  // Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-  OG_BUCKET: R2Bucket;
 
+export interface Env {
+  OG_BUCKET: R2Bucket;
   BUCKET_AUTH_KEY_SECRET: string;
 }
 
@@ -61,6 +53,9 @@ export default {
 
     let imageSrc = params.get("imageSrc");
 
+    /**
+     * For loading a remote image, you can use the following example:
+     */
     // const sampleImage = await env.OG_BUCKET.get("og-sample-image-1.png");
 
     // if (sampleImage) {

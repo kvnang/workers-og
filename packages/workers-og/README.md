@@ -8,9 +8,25 @@ This package is designed to be used with Cloudflare Workers (but may be used els
 
 ## Difference from `@vercel/og`
 
-`@vercel/og` is designed to run on Vercel's edge runtime, and `workers-og` on Cloudflare Workers.
+`@vercel/og` is designed to run on Vercel’s edge runtime, and `workers-og` on Cloudflare Workers.
 
-While `satori` (used in both `@vercel/og` and `workers-og`) accepts React element as the input, `workers-og` adds a feature which allows you to write a simple HTML, which will here be parsed into React element-like object.
+Although Vercel’s edge runtime runs on Cloudflare Workers, the way WASM is bundled is different and causes an error when using `@vercel/og` on a Worker.
+
+**Another unique feature**: while `satori` (used in both `@vercel/og` and `workers-og`) accepts React element as the input, `workers-og` adds a feature which allows you to write a simple HTML, which will here be parsed into React element-like object. The parsing is handled by `HTMLRewriter`, which is part of Cloudflare Worker’s runtime API.
+
+## Getting started
+
+Install the package on your Worker project:
+
+```bash
+npm i workers-og
+```
+
+Then, import it to your project. The API mimics `@vercel/og` closely.
+
+```typescript
+import { ImageResponse } from "workers-og";
+```
 
 ## Example Usage on a Worker:
 

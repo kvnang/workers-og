@@ -1,17 +1,13 @@
-import type { SatoriOptions } from "satori/wasm";
+import type { ImageResponse } from "@vercel/og";
 
-export interface ImageResponseOptions {
-  width?: number;
-  height?: number;
-  // emoji?: 'twemoji' | 'blobmoji' | 'noto' | 'openmoji' = 'twemoji',
-  fonts?: SatoriOptions["fonts"];
-  debug?: boolean;
+type VercelImageResponseOptions = NonNullable<
+  ConstructorParameters<typeof ImageResponse>[1]
+>;
 
-  // Options that will be passed to the HTTP response
-  status?: number;
-  statusText?: string;
-  headers?: Record<string, string>;
-
-  // Format
-  format?: "svg" | "png"; // Defaults to 'png'
+export interface ImageResponseOptions extends VercelImageResponseOptions {
+  /**
+   * The format of the image.
+   * @default "png"
+   */
+  format?: "svg" | "png" | undefined; // Defaults to 'png'
 }
