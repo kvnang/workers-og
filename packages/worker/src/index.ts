@@ -8,7 +8,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import { ImageResponse } from "../../workers-og/src/og";
+import { ImageResponse } from "workers-og";
 import { handleBucketRequest } from "./bucket";
 import { corsHeaders } from "./cors";
 import { template } from "./template";

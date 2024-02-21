@@ -14,6 +14,6 @@
     "deploy": "wrangler publish"
   },
   "dependencies": {
-    "workers-og": "^0.0.19"
+    "workers-og": "workspace:^"
   }
 }

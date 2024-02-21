@@ -9,7 +9,7 @@ importers:
   packages/worker:
     dependencies:
       workers-og:
-        specifier: ^0.0.19
+        specifier: workspace:^
         version: link:../workers-og
     devDependencies:
       '@cloudflare/workers-types':
