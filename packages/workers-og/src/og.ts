@@ -14,6 +14,9 @@ const initResvgWasm = async () => {
   try {
     await initWasm(resvgWasm as WebAssembly.Module);
   } catch (err) {
+    if (err instanceof Error && err.message.includes("Already initialized")) {
+      return;
+    }
     console.error(err);
   }
 };
