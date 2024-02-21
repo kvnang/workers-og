@@ -17,7 +17,7 @@ const initResvgWasm = async () => {
     if (err instanceof Error && err.message.includes("Already initialized")) {
       return;
     }
-    console.error(err);
+    throw err;
   }
 };
 
@@ -26,7 +26,7 @@ const initYogaWasm = async () => {
     const yoga = await initYoga(yogaWasm);
     await init(yoga);
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
