@@ -64,8 +64,8 @@ export const og = async ({ element, options }: Props) => {
     typeof element === "string" ? await parseHtml(element) : element;
 
   // 3. Convert React Element to SVG with Satori
-  const width = options?.width || 1200;
-  const height = options?.height || 630;
+  const width = options?.width;
+  const height = options?.height;
 
   const svg = await satori(reactElement, {
     width,
