@@ -52,7 +52,7 @@ interface Props {
   /**
    * The options for the image response.
    */
-  options?: ImageResponseOptions | undefined;
+  options: ImageResponseOptions;
 }
 
 export const og = async ({ element, options }: Props) => {
@@ -64,12 +64,27 @@ export const og = async ({ element, options }: Props) => {
     typeof element === "string" ? await parseHtml(element) : element;
 
   // 3. Convert React Element to SVG with Satori
-  const width = options?.width;
-  const height = options?.height;
+  const width = options.width;
+  const height = options.height;
+
+  let widthHeight:
+    | { width: number; height: number }
+    | { width: number }
+    | { height: number } = {
+    width: 1200,
+    height: 630,
+  };
+
+  if (width && height) {
+    widthHeight = { width, height };
+  } else if (width) {
+    widthHeight = { width };
+  } else if (height) {
+    widthHeight = { height };
+  }
 
   const svg = await satori(reactElement, {
-    width,
-    height,
+    ...widthHeight,
     fonts: !!options?.fonts?.length
       ? options.fonts
       : [
@@ -90,10 +105,16 @@ export const og = async ({ element, options }: Props) => {
 
   // 4. Convert the SVG into a PNG
   const resvg = new Resvg(svg, {
-    fitTo: {
-      mode: "width" as const,
-      value: width,
-    },
+    fitTo:
+      "width" in widthHeight
+        ? {
+            mode: "width" as const,
+            value: widthHeight.width,
+          }
+        : {
+            mode: "height" as const,
+            value: widthHeight.height,
+          },
   });
 
   const pngData = resvg.render();
@@ -105,7 +126,7 @@ export const og = async ({ element, options }: Props) => {
 export class ImageResponse extends Response {
   constructor(
     element: string | React.ReactNode,
-    options: ImageResponseOptions = {}
+    options: ImageResponseOptions
   ) {
     super();
 
