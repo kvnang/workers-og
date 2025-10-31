@@ -11,27 +11,54 @@ import yogaWasm from "../vendors/yoga.wasm";
 // @ts-expect-error .wasm files are not typed
 import resvgWasm from "../vendors/resvg.wasm";
 
+let resvgInitialized = false;
+let resvgInitPromise: Promise<void> | null = null;
+
 const initResvgWasm = async () => {
-  try {
-    console.log("init RESVG");
-    await initWasm(resvgWasm as WebAssembly.Module);
-    console.log("init RESVG");
-  } catch (err) {
-    console.log(err);
-    if (err instanceof Error && err.message.includes("Already initialized")) {
-      return;
-    }
-    throw err;
+  if (resvgInitialized) {
+    return;
   }
+
+  if (!resvgInitPromise) {
+    resvgInitPromise = (async () => {
+      try {
+        await initWasm(resvgWasm as WebAssembly.Module);
+        resvgInitialized = true;
+      } catch (err) {
+        if (err instanceof Error && err.message.includes("Already initialized")) {
+          resvgInitialized = true;
+          return;
+        }
+
+        resvgInitPromise = null;
+        throw err;
+      }
+    })();
+  }
+
+  return resvgInitPromise;
 };
 
+let yogaInitialized = false;
+let yogaInitPromise: Promise<void> | null = null;
+
 const initYogaWasm = async () => {
-  try {
-    const yoga = await initYoga(yogaWasm);
-    init(yoga);
-  } catch (err) {
-    throw err;
+  if (yogaInitialized) {
+    return;
   }
+
+  if (!yogaInitPromise) {
+    yogaInitPromise = (async () => {
+      const yoga = await initYoga(yogaWasm);
+      init(yoga);
+      yogaInitialized = true;
+    })().catch((err) => {
+      yogaInitPromise = null;
+      throw err;
+    });
+  }
+
+  return yogaInitPromise;
 };
 
 interface Props {
