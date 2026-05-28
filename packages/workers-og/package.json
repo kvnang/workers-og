@@ -2,7 +2,8 @@
   "name": "workers-og",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "vendors"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
