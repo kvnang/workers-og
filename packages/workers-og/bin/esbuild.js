@@ -7,7 +7,7 @@ build({
   outdir: "dist",
   format: "esm",
   loader: {
-    ".wasm": "copy",
+    ".wasm": "binary",
   },
   minify: true,
   plugins: [dtsPlugin()],
