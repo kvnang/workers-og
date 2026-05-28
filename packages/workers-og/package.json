@@ -25,6 +25,7 @@
   "private": false,
   "scripts": {
     "build": "node bin/esbuild.js",
+    "prepare": "pnpm build",
     "ts": "tsc --noEmit"
   },
   "dependencies": {
